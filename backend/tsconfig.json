@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    /* Basic */
+    "target": "esnext",
+    "module": "commonjs",
+    "esModuleInterop": true,
+
+    /* Folder structure */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* Type safety */
+    "strict": true,
+
+    /* Quality of life */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

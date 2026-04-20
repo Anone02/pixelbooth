@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ThemeConfig } from '../themes.config';
+import furinaImg from "./images/furina.png";
+import snoopyImg from "./images/snoopy.png";
 
 interface ThemeCardProps {
   theme: ThemeConfig;
@@ -72,32 +74,33 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick }) => {
 
         {theme.id === 'snoopy' ? (
           <motion.div
-            className="absolute bottom-4 right-4 text-4xl"
+            className="absolute bottom-6 right-4"
             animate={{
-              y: [0, -4, 0],
+              y: [0, 0, 0],
+              scale: [1, 1.1, 1],
             }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               repeat: Infinity,
-              ease: 'easeInOut',
+              ease: "easeInOut",
             }}
           >
-            🐾
+            <img src={snoopyImg} className="w-30 h-30" />
           </motion.div>
         ) : (
           <motion.div
-            className="absolute bottom-4 right-4 text-4xl"
+            className="absolute bottom-6 right-4"
             animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
+              y: [0, 0, 0],
+              scale: [1, 1.1, 1],
             }}
             transition={{
-              duration: 3,
+              duration: 2.5,
               repeat: Infinity,
-              ease: 'linear',
+              ease: "easeInOut",
             }}
           >
-            💧
+            <img src={furinaImg} className="w-25 h-30" />
           </motion.div>
         )}
       </div>

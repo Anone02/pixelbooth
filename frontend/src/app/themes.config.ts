@@ -23,7 +23,7 @@ export interface ThemeConfig {
 export const themes: Record<string, ThemeConfig> = {
   snoopy: {
     id: 'snoopy',
-    name: 'Snoopy Nature',
+    name: 'Snoopy',
     colors: {
       primary: '#8B9D83',
       secondary: '#8B6F47',
@@ -44,7 +44,7 @@ export const themes: Record<string, ThemeConfig> = {
   },
   furina: {
     id: 'furina',
-    name: 'Furina Fontaine',
+    name: 'Furina',
     colors: {
       primary: '#1E3A8A',
       secondary: '#06B6D4',

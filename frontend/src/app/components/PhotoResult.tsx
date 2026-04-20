@@ -113,6 +113,27 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
 
     const url = canvas.toDataURL('image/png');
     setCollageUrl(url);
+    uploadToBackend(url);
+  };
+
+  const uploadToBackend = async (image: string) => {
+    try {
+      await fetch("http://localhost:3001/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: userName || "guest",
+          theme: currentTheme.id,
+          image: image,
+        }),
+      });
+
+      console.log("🔥 COLLAGE berhasil dikirim ke backend");
+    } catch (err) {
+      console.error("❌ gagal upload collage:", err);
+    }
   };
 
   const drawPixelatedFrame = (

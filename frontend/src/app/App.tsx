@@ -10,6 +10,7 @@ type AppState = 'dashboard' | 'setup' | 'shooting' | 'result';
 
 export default function App() {
   const [currentState, setCurrentState] = useState<AppState>('dashboard');
+  const [selectedTheme, setSelectedTheme] = useState<string>('snoopy');
   const [userName, setUserName] = useState<string>('');
   const [shootingConfig, setShootingConfig] = useState<ShootingConfig>({
     orientation: 'portrait',
@@ -18,7 +19,10 @@ export default function App() {
   const [capturedPhotos, setCapturedPhotos] = useState<string[]>([]);
   const [transitionDirection, setTransitionDirection] = useState<'forward' | 'backward'>('forward');
 
-  const handleStartSetup = () => {
+  const handleStartSetup = (theme: string) => {
+    console.log("🔥 THEME MASUK KE APP:", theme);
+
+    setSelectedTheme(theme);
     setTransitionDirection('forward');
     setCurrentState('setup');
   };
@@ -29,10 +33,11 @@ export default function App() {
     setCurrentState('shooting');
   };
 
-  const handlePhotosComplete = (photos: string[]) => {
-    setCapturedPhotos(photos);
-    setTransitionDirection('forward');
-    setCurrentState('result');
+  const handlePhotosComplete = async (photos: string[]) => {
+    console.log("🧠 FINAL THEME:", selectedTheme);
+  setCapturedPhotos(photos);
+  setTransitionDirection('forward');
+  setCurrentState('result');
   };
 
   const handleRestart = () => {

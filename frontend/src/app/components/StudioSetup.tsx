@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Camera } from 'lucide-react';
+import furinaImg from "./images/furina.png";
 
 interface StudioSetupProps {
   onStartShooting: (config: ShootingConfig) => void;
@@ -102,6 +103,8 @@ export const StudioSetup: React.FC<StudioSetupProps> = ({ onStartShooting, onBac
               </button>
             </div>
 
+            <div className="relative">
+
             <h3
               className="text-lg mb-6"
               style={{
@@ -123,13 +126,35 @@ export const StudioSetup: React.FC<StudioSetupProps> = ({ onStartShooting, onBac
                     backgroundColor: shotCount === count ? currentTheme.colors.secondary : 'white',
                     color: shotCount === count ? 'white' : currentTheme.colors.text,
                     fontFamily: currentTheme.font,
-                    boxShadow: shotCount === count ? `6px 6px 0 ${currentTheme.colors.accent}` : '4px 4px 0 rgba(0,0,0,0.2)',
+                    boxShadow: shotCount === count
+                      ? `6px 6px 0 ${currentTheme.colors.accent}`
+                      : '4px 4px 0 rgba(0,0,0,0.2)',
                   }}
                 >
                   {count}
                 </button>
               ))}
             </div>
+
+            {/* 🔥 FURINA DECOR (FIXED) */}
+            {currentTheme.id === 'furina' && (
+              <motion.div
+                className="absolute -bottom-13 -left-19 pointer-events-none"
+                animate={{
+                  y: [0, -6, 0],
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <img src={furinaImg} className="w-28 h-30 object-contain" />
+              </motion.div>
+            )}
+
+          </div>
           </div>
         </motion.div>
 
@@ -139,7 +164,7 @@ export const StudioSetup: React.FC<StudioSetupProps> = ({ onStartShooting, onBac
           transition={{ delay: 0.4 }}
         >
           <div
-            className="border-4 p-8 h-full"
+            className="border-4 p-8 h-full relative"
             style={{
               borderColor: currentTheme.colors.border,
               backgroundColor: 'white',
@@ -157,6 +182,22 @@ export const StudioSetup: React.FC<StudioSetupProps> = ({ onStartShooting, onBac
             </h3>
 
             <GridPreview orientation={orientation} shotCount={shotCount} theme={currentTheme} />
+            {currentTheme.id === 'furina' && (
+              <motion.div
+                className="absolute bottom-4 right-4 pointer-events-none"
+                animate={{
+                  y: [0, -6, 0],
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <img src={furinaImg} className="w-14 h-14 object-contain" />
+              </motion.div>
+            )}
           </div>
         </motion.div>
       </div>

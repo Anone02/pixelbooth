@@ -5,7 +5,7 @@ import { themes } from '../themes.config';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface DashboardProps {
-  onStartSetup: () => void;
+  onStartSetup: (theme: string) => void;
   userName: string;
   setUserName: (name: string) => void;
 }
@@ -19,11 +19,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartSetup, userName, se
   );
 
   const handleThemeSelect = (themeId: string) => {
-    setTheme(themeId);
-    setTimeout(() => {
-      onStartSetup();
-    }, 300);
-  };
+  console.log("CLICKED THEME:", themeId);
+
+  setTheme(themeId);
+
+  onStartSetup(themeId);
+};
 
   return (
     <div className="min-h-screen p-8 flex flex-col items-center justify-center bg-gradient-to-b from-purple-200 via-pink-200 to-blue-200">
@@ -86,7 +87,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartSetup, userName, se
             type="text"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            placeholder="PLAYER 1"
+            placeholder="YOUR NAME"
             className="w-full border-4 border-black p-4 text-lg"
             style={{
               fontFamily: "'Press Start 2P', monospace",
