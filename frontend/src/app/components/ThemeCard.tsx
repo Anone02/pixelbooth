@@ -75,30 +75,12 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick }) => {
         {theme.id === 'snoopy' ? (
           <motion.div
             className="absolute bottom-6 right-4"
-            animate={{
-              y: [0, 0, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
           >
-            <img src={snoopyImg} className="w-30 h-30" />
+            <img src={snoopyImg} className="w-35 h-35" />
           </motion.div>
         ) : (
           <motion.div
             className="absolute bottom-6 right-4"
-            animate={{
-              y: [0, 0, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
           >
             <img src={furinaImg} className="w-25 h-30" />
           </motion.div>

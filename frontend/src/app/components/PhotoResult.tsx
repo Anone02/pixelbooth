@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Download, RotateCcw } from 'lucide-react';
 import { ShootingConfig } from './StudioSetup';
+import snoopyFrame from "./images/snoopyframe.png";
+import furinaFrame from "./images/furinaframe.png";
 
 interface PhotoResultProps {
   photos: string[];
@@ -16,9 +18,24 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [collageUrl, setCollageUrl] = useState<string>('');
 
+  const FRAME_CONFIG = {
+    snoopy: {
+      portrait: {
+        src: snoopyFrame,
+        photoArea: { x: 120, y: 180, width: 560, height: 760 },
+      },
+    },
+    furina: {
+      portrait: {
+        src: furinaFrame,
+        photoArea: { x: 100, y: 150, width: 600, height: 800 },
+      },
+    },
+  };
+
   useEffect(() => {
     generateCollage();
-  }, [photos, config]);
+  }, [photos, config, currentTheme]);
 
   const generateCollage = async () => {
     if (!canvasRef.current) return;
@@ -37,29 +54,53 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
     canvas.width = baseWidth;
     canvas.height = baseHeight;
 
+    const frameConfig = FRAME_CONFIG[currentTheme.id]?.[config.orientation];
+
+    let frameImg: HTMLImageElement | null = null;
+
+    if (frameConfig) {
+      frameImg = new Image();
+      frameImg.src = frameConfig.src;
+
+      await new Promise((resolve) => {
+        frameImg!.onload = resolve;
+      });
+    }
+
     ctx.fillStyle = currentTheme.colors.background;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawPixelatedFrame(ctx, canvas.width, canvas.height, frameWidth, currentTheme);
-
     const getGridLayout = () => {
       if (config.shotCount === 1) return { cols: 1, rows: 1 };
-      if (config.shotCount === 2) return config.orientation === 'portrait' ? { cols: 1, rows: 2 } : { cols: 2, rows: 1 };
+      if (config.shotCount === 2)
+        return config.orientation === 'portrait'
+          ? { cols: 1, rows: 2 }
+          : { cols: 2, rows: 1 };
       if (config.shotCount === 4) return { cols: 2, rows: 2 };
-      if (config.shotCount === 6) return config.orientation === 'portrait' ? { cols: 2, rows: 3 } : { cols: 3, rows: 2 };
+      if (config.shotCount === 6)
+        return config.orientation === 'portrait'
+          ? { cols: 2, rows: 3 }
+          : { cols: 3, rows: 2 };
       return { cols: 2, rows: 2 };
     };
 
     const { cols, rows } = getGridLayout();
 
-    const contentWidth = canvas.width - (frameWidth * 2) - (padding * 2);
-    const contentHeight = canvas.height - (frameWidth * 2) - (padding * 2) - 80;
+    let startX, startY, contentWidth, contentHeight;
 
-    const photoWidth = (contentWidth - (gridGap * (cols - 1))) / cols;
-    const photoHeight = (contentHeight - (gridGap * (rows - 1))) / rows;
+    if (frameConfig) {
+      ({ x: startX, y: startY, width: contentWidth, height: contentHeight } =
+        frameConfig.photoArea);
+    } else {
+      startX = frameWidth + padding;
+      startY = frameWidth + padding;
 
-    const startX = frameWidth + padding;
-    const startY = frameWidth + padding;
+      contentWidth = canvas.width - frameWidth * 2 - padding * 2;
+      contentHeight = canvas.height - frameWidth * 2 - padding * 2 - 80;
+    }
+
+    const photoWidth = (contentWidth - gridGap * (cols - 1)) / cols;
+    const photoHeight = (contentHeight - gridGap * (rows - 1)) / rows;
 
     const loadedImages = await Promise.all(
       photos.map((photo) => {
@@ -86,21 +127,35 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
       ctx.fillStyle = 'white';
       ctx.fillRect(x + 2, y + 2, photoWidth - 4, photoHeight - 4);
 
-      const scale = Math.min(
-        (photoWidth - 8) / img.width,
-        (photoHeight - 8) / img.height
+      const targetRatio = (photoWidth - 8) / (photoHeight - 8);
+      const imgRatio = img.width / img.height;
+
+      let sx = 0;
+      let sy = 0;
+      let sWidth = img.width;
+      let sHeight = img.height;
+
+      if (imgRatio > targetRatio) {
+        sWidth = img.height * targetRatio;
+        sx = (img.width - sWidth) / 2;
+      } else {
+        sHeight = img.width / targetRatio;
+        sy = (img.height - sHeight) / 2;
+      }
+
+      ctx.drawImage(
+        img,
+        sx, sy, sWidth, sHeight,
+        x + 4, y + 4, photoWidth - 8, photoHeight - 8
       );
-      const scaledWidth = img.width * scale;
-      const scaledHeight = img.height * scale;
-
-      const offsetX = x + 4 + (photoWidth - 8 - scaledWidth) / 2;
-      const offsetY = y + 4 + (photoHeight - 8 - scaledHeight) / 2;
-
-      ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
       ctx.restore();
     });
 
-    const bottomY = canvas.height - frameWidth - 60;
+    // 🔥 posisi text (naikin lebih atas & lebih fleksibel)
+    const TEXT_OFFSET = 120; // makin besar = makin ke atas
+
+    const bottomY = canvas.height - frameWidth - TEXT_OFFSET;
+
     ctx.font = "20px 'Press Start 2P'";
     ctx.fillStyle = currentTheme.colors.text;
     ctx.textAlign = 'center';
@@ -109,7 +164,9 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
     ctx.font = "14px 'Press Start 2P'";
     ctx.fillText(currentTheme.name.toUpperCase(), canvas.width / 2, bottomY + 30);
 
-    drawStickers(ctx, canvas.width, canvas.height, currentTheme);
+    if (frameImg) {
+      ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
+    }
 
     const url = canvas.toDataURL('image/png');
     setCollageUrl(url);

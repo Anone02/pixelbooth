@@ -3,6 +3,9 @@ import { motion } from 'motion/react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Camera } from 'lucide-react';
 import furinaImg from "./images/furina.png";
+import furinaImg1 from "./images/furina1.png";
+import snoopyImg from "./images/snoopy1.png";
+import snoopyImg1 from "./images/snoopy2.png";
 
 interface StudioSetupProps {
   onStartShooting: (config: ShootingConfig) => void;
@@ -136,19 +139,17 @@ export const StudioSetup: React.FC<StudioSetupProps> = ({ onStartShooting, onBac
               ))}
             </div>
 
-            {/* 🔥 FURINA DECOR (FIXED) */}
+            {currentTheme.id === 'snoopy' && (
+              <motion.div
+                className="absolute -bottom-8 -left-17 pointer-events-none"
+              >
+                <img src={snoopyImg} className="w-28 h-28 object-contain" />
+              </motion.div>
+            )}
+
             {currentTheme.id === 'furina' && (
               <motion.div
-                className="absolute -bottom-13 -left-19 pointer-events-none"
-                animate={{
-                  y: [0, -6, 0],
-                  scale: [1, 1.08, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                className="absolute -bottom-9 -left-17 pointer-events-none"
               >
                 <img src={furinaImg} className="w-28 h-30 object-contain" />
               </motion.div>
@@ -182,20 +183,20 @@ export const StudioSetup: React.FC<StudioSetupProps> = ({ onStartShooting, onBac
             </h3>
 
             <GridPreview orientation={orientation} shotCount={shotCount} theme={currentTheme} />
+
+            {currentTheme.id === 'snoopy' && (
+              <motion.div
+                className="absolute bottom-[-30px] right-[-80px] pointer-events-none"
+              >
+                <img src={snoopyImg1} className="w-58 h-58 object-contain" />
+              </motion.div>
+            )}
+
             {currentTheme.id === 'furina' && (
               <motion.div
-                className="absolute bottom-4 right-4 pointer-events-none"
-                animate={{
-                  y: [0, -6, 0],
-                  scale: [1, 1.08, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                className="absolute bottom-[-40px] right-[-100px] pointer-events-none"
               >
-                <img src={furinaImg} className="w-14 h-14 object-contain" />
+                <img src={furinaImg1} className="w-70 h-70 object-contain" />
               </motion.div>
             )}
           </div>

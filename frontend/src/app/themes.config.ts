@@ -51,7 +51,7 @@ export const themes: Record<string, ThemeConfig> = {
       accent: '#FFD700',
       background: '#DBEAFE',
       text: '#1E3A8A',
-      border: '#000000',
+      border: '#b8d8fe',
     },
     font: "'Press Start 2P', monospace",
     particleType: 'bubble',
