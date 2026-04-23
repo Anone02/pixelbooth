@@ -29,7 +29,7 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
     furina: {
       portrait: {
         src: furinaFrame,
-        photoArea: { x: 100, y: 150, width: 600, height: 800 },
+        photoArea: { x: 150, y: 150, width: 500, height: 900 },
       },
 
       landscape: {
@@ -168,13 +168,13 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
 
     const bottomY = canvas.height - frameWidth - TEXT_OFFSET;
 
-    ctx.font = "20px 'Press Start 2P'";
+    //ctx.font = "20px 'Press Start 2P'";
     //ctx.fillStyle = currentTheme.colors.text;
     ctx.textAlign = 'center';
     //ctx.fillText(userName || 'PHOTOBOOTH', canvas.width / 2, bottomY);
 
     ctx.font = "14px 'Press Start 2P'";
-    ctx.fillText(currentTheme.name.toUpperCase(), canvas.width / 2, bottomY + 30);
+    //ctx.fillText(currentTheme.name.toUpperCase(), canvas.width / 2, bottomY + 30);
 
     if (frameImg) {
       ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
