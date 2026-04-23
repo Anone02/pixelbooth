@@ -140,7 +140,7 @@ export const ShootingPhase: React.FC<ShootingPhaseProps> = ({ config, onComplete
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 2, opacity: 0 }}
-                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20"
+                className="absolute inset-0 flex items-center justify-center z-20"
               >
                 <div
                   className="text-9xl"
