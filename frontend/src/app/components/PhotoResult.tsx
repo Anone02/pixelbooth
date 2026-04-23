@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { Download, RotateCcw } from 'lucide-react';
 import { ShootingConfig } from './StudioSetup';
 import snoopyFrame from "./images/snoopyframe.png";
+import snoopyFrameL from "./images/snoopyframel.png";
 import furinaFrame from "./images/furinaframe.png";
 import furinaFrameL from "./images/furinaframel.png";
 
@@ -23,8 +24,19 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
     snoopy: {
       portrait: {
         src: snoopyFrame,
-        photoArea: { x: 120, y: 180, width: 560, height: 760 },
+        photoArea: { x: 150, y: 235, width: 500, height: 800 },
       },
+
+      landscape: {
+        src: snoopyFrameL,
+        photoArea: {
+          x: 150,
+          y: 190,
+          width: 900,
+          height: 500,
+        },
+      }
+
     },
     furina: {
       portrait: {
