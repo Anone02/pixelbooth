@@ -5,6 +5,7 @@ import { Download, RotateCcw } from 'lucide-react';
 import { ShootingConfig } from './StudioSetup';
 import snoopyFrame from "./images/snoopyframe.png";
 import furinaFrame from "./images/furinaframe.png";
+import furinaFrameL from "./images/furinaframel.png";
 
 interface PhotoResultProps {
   photos: string[];
@@ -30,6 +31,17 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
         src: furinaFrame,
         photoArea: { x: 100, y: 150, width: 600, height: 800 },
       },
+
+      landscape: {
+        src: furinaFrameL,
+        photoArea: {
+          x: 150,
+          y: 120,
+          width: 900,
+          height: 500,
+        },
+      },
+    
     },
   };
 
@@ -157,9 +169,9 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
     const bottomY = canvas.height - frameWidth - TEXT_OFFSET;
 
     ctx.font = "20px 'Press Start 2P'";
-    ctx.fillStyle = currentTheme.colors.text;
+    //ctx.fillStyle = currentTheme.colors.text;
     ctx.textAlign = 'center';
-    ctx.fillText(userName || 'PHOTOBOOTH', canvas.width / 2, bottomY);
+    //ctx.fillText(userName || 'PHOTOBOOTH', canvas.width / 2, bottomY);
 
     ctx.font = "14px 'Press Start 2P'";
     ctx.fillText(currentTheme.name.toUpperCase(), canvas.width / 2, bottomY + 30);
