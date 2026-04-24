@@ -5,20 +5,20 @@ import { supabase } from "./supabase";
 const app = express();
 
 const allowedOrigins = [
-  "https://pixelbooth-ten.vercel.app", // Alamat Vercel lo
-  "http://localhost:5173"              // Alamat Lokal lo
-];
+  "http://localhost:5173", 
+  process.env.FRONTEND_URL 
+].filter(Boolean); 
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Izinkan kalau origin ada di list atau kalau nggak ada origin (buat Postman/Mobile)
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("Ditolak CORS. Origin pengirim:", origin);
       callback(new Error('Kena blokir CORS bos!'));
     }
   },
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
   credentials: true
 }));
 
