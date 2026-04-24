@@ -4,8 +4,10 @@ import { supabase } from "./supabase";
 
 const app = express();
 
-app.use(cors());
-app.use(express.json({ limit: "10mb" }));
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
+app.use(express.json({ limit: "5mb" }));
 
 app.get("/", (req, res) => {
   res.send("Backend hidup 🚀");
@@ -15,8 +17,19 @@ app.post("/upload", async (req, res) => {
   try {
     const { name, theme, image } = req.body;
 
-    if (!image) {
-      return res.status(400).json({ error: "No image" });
+    // ✅ VALIDASI WAJIB
+    if (!name || !theme || !image) {
+      return res.status(400).json({ error: "Missing fields" });
+    }
+
+    // ✅ VALIDASI NAME
+    if (typeof name !== "string" || name.length > 50) {
+      return res.status(400).json({ error: "Invalid name" });
+    }
+
+    // ✅ VALIDASI THEME (biar gak diinject)
+    if (!["snoopy", "furina"].includes(theme)) {
+      return res.status(400).json({ error: "Invalid theme" });
     }
 
     // convert base64 → buffer
