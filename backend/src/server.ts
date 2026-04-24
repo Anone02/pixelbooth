@@ -5,16 +5,18 @@ import { supabase } from "./supabase";
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:5173", 
-  process.env.FRONTEND_URL 
-].filter(Boolean); 
+  "https://pixelbooth-nine.vercel.app",
+  "http://localhost:5173"
+];
 
 app.use(cors({
   origin: function (origin, callback) {
+    // KITA PRINT ORIGIN ASLINYA KE LOG RAILWAY
+    console.log("ORIGIN_YANG_DATANG:", `|${origin}|`); 
+
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log("Ditolak CORS. Origin pengirim:", origin);
       callback(new Error('Kena blokir CORS bos!'));
     }
   },
