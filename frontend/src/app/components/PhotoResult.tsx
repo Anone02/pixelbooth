@@ -199,7 +199,8 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
 
   const uploadToBackend = async (image: string) => {
     try {
-      await fetch("https://pixelbooth-production.up.railway.app/upload", {
+      
+      await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -210,10 +211,9 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
           image: image,
         }),
       });
-
-      console.log("🔥 COLLAGE berhasil dikirim ke backend");
-    } catch (err) {
-      console.error("❌ gagal upload collage:", err);
+      console.log("✅ Upload berhasil!");
+    } catch (error) {
+      console.error("❌ Gagal upload:", error);
     }
   };
 
