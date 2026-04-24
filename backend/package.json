@@ -4,7 +4,7 @@
   "description": "Backend for PixelBooth",
   "main": "dist/server.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "node ./node_modules/typescript/bin/tsc",
     "start": "node dist/server.js",
     "dev": "ts-node src/server.ts"
   },
