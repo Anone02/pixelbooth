@@ -199,7 +199,7 @@ export const PhotoResult: React.FC<PhotoResultProps> = ({ photos, config, onRest
 
   const uploadToBackend = async (image: string) => {
     try {
-      await fetch("http://localhost:3001/upload", {
+      await fetch("https://pixelbooth-production.up.railway.app/upload", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
