@@ -1,18 +1,15 @@
 {
   "compilerOptions": {
-    /* Basic */
-    "target": "esnext",
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
 
-    /* Folder structure */
     "rootDir": "./src",
     "outDir": "./dist",
 
-    /* Type safety */
     "strict": true,
 
-    /* Quality of life */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }
